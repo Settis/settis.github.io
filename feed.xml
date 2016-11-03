@@ -1,31 +1,64 @@
----
-layout: null
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ site.title | xml_escape }}</title>
-    <description>{{ site.description | xml_escape }}</description>
-    <link>{{ site.url }}{{ site.baseurl }}/</link>
-    <atom:link href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" rel="self" type="application/rss+xml"/>
-    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
-    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
-    <generator>Jekyll v{{ jekyll.version }}</generator>
-    {% assign posts = site.posts | sort: 'pub_date' | reverse %}
-    {% for post in posts limit:10 %}
+    <title>Settis</title>
+    <description></description>
+    <link>https://settis.github.io/</link>
+    <atom:link href="https://settis.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 03 Nov 2016 15:37:30 +0300</pubDate>
+    <lastBuildDate>Thu, 03 Nov 2016 15:37:30 +0300</lastBuildDate>
+    <generator>Jekyll v3.2.1</generator>
+    
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.excerpt | remove: '<p>' | remove: '</p>' | xml_escape }}</description>
-        <pubDate>{{ post.pub_date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | prepend: site.baseurl | prepend: site.url }}</link>
-        <guid isPermaLink="true">{{ post.url | prepend: site.baseurl | prepend: site.url }}</guid>
-        {% for tag in post.tags %}
-        <category>{{ tag | xml_escape }}</category>
-        {% endfor %}
-        {% for cat in post.categories %}
-        <category>{{ cat | xml_escape }}</category>
-        {% endfor %}
+        <title>Presentation mode for awesome</title>
+        <description>After user’s inactivity, you want to dim the screen for power saving or to lock the screen for a security reason.
+But it’s annoying when you try to watch a video or to take part in a meeting.
+Since Awesome is the framework window manager, we can programme this the rigth way.
+
+</description>
+        <pubDate>Wed, 19 Oct 2016 00:00:00 +0300</pubDate>
+        <link>https://settis.github.io/2016/10/19/presentation-mode-for-awesome/</link>
+        <guid isPermaLink="true">https://settis.github.io/2016/10/19/presentation-mode-for-awesome/</guid>
+        
+        <category>awesome</category>
+        
+        <category>lua</category>
+        
+        <category>xscreensaver</category>
+        
+        
+        <category>Coding</category>
+        
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>Вопрос</title>
+        <description>Речь для выступления на конференции готовится заранее. Ты делаешь слайды и хотя бы примерно представляешь, что нужно где сказать. А вот вопросы после выступления могут стать абсолютной неожиданностью, к которой ты совершенно не готов.
+
+</description>
+        <pubDate>Tue, 04 Oct 2016 00:00:00 +0300</pubDate>
+        <link>https://settis.github.io/2016/10/04/question/</link>
+        <guid isPermaLink="true">https://settis.github.io/2016/10/04/question/</guid>
+        
+        
+        <category>Истории</category>
+        
+      </item>
+    
+      <item>
+        <title>Городской попутчик</title>
+        <description>Попутчики окружают нас везде. Вот только говорим мы с ними нечасто. Обычно мы разговариваем с ними в поездах, реже в электричках, примерно так же в междугородних автобусах и всегда при путешествии автостопом. Но вот разговориться с попутчиком при передвижении по городу - случай не частый.
+
+</description>
+        <pubDate>Tue, 13 Sep 2016 00:00:00 +0300</pubDate>
+        <link>https://settis.github.io/2016/09/13/chance-meeting/</link>
+        <guid isPermaLink="true">https://settis.github.io/2016/09/13/chance-meeting/</guid>
+        
+        
+        <category>Истории</category>
+        
+      </item>
+    
   </channel>
 </rss>

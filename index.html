@@ -1,65 +1,289 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html>
 
-<div class="page clearfix" index>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Settis</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="/css/fontawesome/css/font-awesome.min.css ">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="https://settis.github.io/">
+    <link rel="alternate" type="application/rss+xml" title="Settis" href="https://settis.github.io/feed.xml ">
+
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-85517469-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">Settis</a>
+        <small></small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a class="active" href="/">
+                        
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" index>
     <div class="left">
         <ul>
-            {% for post in paginator.posts %}
+            
               <li>
                 <h2>
-                  <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                  <a class="post-link" href="/2016/10/19/presentation-mode-for-awesome/">Presentation mode for awesome</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>{{ post.date | date_to_string }}
+                        <i class="fa fa-calendar"></i>19 Oct 2016
                     </div>
                     <div class="label-card">
-                        {% if post.author %}<i class="fa fa-user"></i>{{ post.author }}
-                        {% endif %}
+                        
                     </div>
                     <div class="label-card">
-                        {% if page.meta %}<i class="fa fa-key"></i>{{ page.meta }}  {% endif %}
-                    </div>
-
-                    <div class="label-card">
-                    {% include category.html %}
+                        
                     </div>
 
                     <div class="label-card">
-                    {% include tag.html %}
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Coding" title="Category: Coding" rel="category">Coding</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+                    </div>
+
+                    <div class="label-card">
+                    
+<!-- <span class="point">•</span> -->
+
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#awesome" title="Tag: awesome" rel="tag">awesome</a>&nbsp;
+    
+        <a href="/tag/#lua" title="Tag: lua" rel="tag">lua</a>&nbsp;
+    
+        <a href="/tag/#xscreensaver" title="Tag: xscreensaver" rel="tag">xscreensaver</a>
+    
+  
+
+</span>
+
+
                     </div>
                 </div>
                 <div class="excerpt">
-                    {{post.excerpt}}
+                    <p>After user’s inactivity, you want to dim the screen for power saving or to lock the screen for a security reason.
+But it’s annoying when you try to watch a video or to take part in a meeting.
+Since Awesome is the framework window manager, we can programme this the rigth way.</p>
+
+
                 </div>
                 <div class="read-all">
-                    <a  href="{{ post.url | prepend: site.baseurl }}"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="/2016/10/19/presentation-mode-for-awesome/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
-            {% endfor %}
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/2016/10/04/question/">Вопрос</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>04 Oct 2016
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Истории" title="Category: Истории" rel="category">Истории</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+                    </div>
+
+                    <div class="label-card">
+                    
+<!-- <span class="point">•</span> -->
+
+
+                    </div>
+                </div>
+                <div class="excerpt">
+                    <p>Речь для выступления на конференции готовится заранее. Ты делаешь слайды и хотя бы примерно представляешь, что нужно где сказать. А вот вопросы после выступления могут стать абсолютной неожиданностью, к которой ты совершенно не готов.</p>
+
+
+                </div>
+                <div class="read-all">
+                    <a  href="/2016/10/04/question/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/2016/09/13/chance-meeting/">Городской попутчик</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>13 Sep 2016
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Истории" title="Category: Истории" rel="category">Истории</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+                    </div>
+
+                    <div class="label-card">
+                    
+<!-- <span class="point">•</span> -->
+
+
+                    </div>
+                </div>
+                <div class="excerpt">
+                    <p>Попутчики окружают нас везде. Вот только говорим мы с ними нечасто. Обычно мы разговариваем с ними в поездах, реже в электричках, примерно так же в междугородних автобусах и всегда при путешествии автостопом. Но вот разговориться с попутчиком при передвижении по городу - случай не частый.</p>
+
+
+                </div>
+                <div class="read-all">
+                    <a  href="/2016/09/13/chance-meeting/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
         </ul>
 
 
 
         <!-- Pagination links -->
         <div class="pagination">
-          {% if paginator.previous_page %}
-            <a href="/index.html" class="previous"><i class="fa fa-angle-double-left"></i></a>
-            <a href="{{ paginator.previous_page_path }}" class="previous"><i class="fa fa-angle-left"></i></a>
-          {% else %}
+          
             <span class="previous disable"><i class="fa fa-angle-double-left"></i></span>
             <span class="previous disable"><i class="fa fa-angle-left"></i></span>
-          {% endif %}
-          <span class="page_number ">{{ paginator.page }}/{{ paginator.total_pages }}</span>
-          {% if paginator.next_page %}
-            <a href="{{ paginator.next_page_path }}" class="next"><i class="fa fa-angle-right"></i></a>
-            <a href="/page{{ paginator.total_pages }}" class="next"><i class="fa fa-angle-double-right"></i></a>
-          {% else %}
+          
+          <span class="page_number ">1/1</span>
+          
             <span class="next disable"><i class="fa fa-angle-right"></i></span>
             <span class="next disable"><i class="fa fa-angle-double-right"></i></span>
-          {% endif %}
+          
         </div>
     </div>
     <!-- <button class="anchor"><i class="fa fa-anchor"></i></button> -->
@@ -72,17 +296,26 @@ layout: default
                     Categories
                 </div>
                 <ul class="content-ul" cate>
-		    {% assign categories = site.categories | order:ascending %}
-                    {% for category in categories %}
+		    
+                    
                     <li>
-                        <a href="{{ root_url }}/{{ site.category_dir }}#{{ category | first }}" class="categories-list-item" cate="{{ category | first }}">
+                        <a href="/category/#Истории" class="categories-list-item" cate="Истории">
                             <span class="name">
-                                {{ category | first }}
+                                Истории
                             </span>
-                            <span class="badge">{{ category | last | size }}</span>
+                            <span class="badge">2</span>
                         </a>
                     </li>
-                    {% endfor %}
+                    
+                    <li>
+                        <a href="/category/#Coding" class="categories-list-item" cate="Coding">
+                            <span class="name">
+                                Coding
+                            </span>
+                            <span class="badge">1</span>
+                        </a>
+                    </li>
+                    
                 </ul>
             </div>
             <!-- 其他div框放到这里 -->
@@ -92,41 +325,35 @@ layout: default
                     Tags
                 </div>
                 <div class="tags-cloud">
-                    {% assign first = site.tags.first %}
-                    {% assign max = first[1].size %}
-                    {% assign min = max %}
-                    {% for tag in site.tags offset:1 %}
-                      {% if tag[1].size > max %}
-                        {% assign max = tag[1].size %}
-                      {% elsif tag[1].size < min %}
-                        {% assign min = tag[1].size %}
-                      {% endif %}
-                    {% endfor %}
+                    
+                    
+                    
+                    
 
-                    {% if max == min %}
-                        {% assign diff = 1 %}
-                    {% else %}    
-                        {% assign diff = max | minus: min %}
-                    {% endif %}
+                    
 
-                    {% for tag in site.tags %}
-                      {% assign temp = tag[1].size | minus: min | times: 36 | divided_by: diff %}
-                      {% assign base = temp | divided_by: 4 %}
-                      {% assign remain = temp | modulo: 4 %}
-                      {% if remain == 0 %}
-                        {% assign size = base | plus: 9 %}
-                      {% elsif remain == 1 or remain == 2 %}
-                        {% assign size = base | plus: 9 | append: '.5' %}
-                      {% else %}
-                        {% assign size = base | plus: 10 %}
-                      {% endif %}
-                      {% if remain == 0 or remain == 1 %}
-                        {% assign color = 9 | minus: base %}
-                      {% else %}
-                        {% assign color = 8 | minus: base %}
-                      {% endif %}
-                      <a href="{{ root_url }}/{{ site.tag_dir }}#{{ tag[0] }}" style="font-size: {{ size }}pt; color: #{{ color }}{{ color }}{{ color }};">{{ tag[0] }}</a>
-                    {% endfor %}
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#awesome" style="font-size: 9pt; color: #999;">awesome</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#lua" style="font-size: 9pt; color: #999;">lua</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#xscreensaver" style="font-size: 9pt; color: #999;">xscreensaver</a>
+                    
                 </div>
             </div>
             <div class="side">
@@ -135,10 +362,14 @@ layout: default
                     Recent Posts
                 </div>
                 <ul class="content-ul" recent>
-                    {% assign posts = site.posts | sort: 'pub_date' | reverse %}
-                    {% for post in posts limit: 10  %}
-                        <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-                    {% endfor %}
+                    
+                    
+                        <li><a href="/2016/10/19/presentation-mode-for-awesome/">Presentation mode for awesome</a></li>
+                    
+                        <li><a href="/2016/10/04/question/">Вопрос</a></li>
+                    
+                        <li><a href="/2016/09/13/chance-meeting/">Городской попутчик</a></li>
+                    
                 </ul>
             </div>
 
@@ -154,5 +385,42 @@ layout: default
         </div>
     </div>
 </div>
-<!-- <script src="{{ "/js/scroll.min.js " | prepend: site.baseurl }}" charset="utf-8"></script> -->
-<!-- <script src="{{ "/js/pageContent.js " | prepend: site.baseurl }}" charset="utf-8"></script> -->
+<!-- <script src="/js/scroll.min.js " charset="utf-8"></script> -->
+<!-- <script src="/js/pageContent.js " charset="utf-8"></script> -->
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+	
+
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/Settis" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:strannik.anton@gmail.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>         
+            <a href="https://vk.com/settis" title="VK"><i class="fa fa-vk" aria-hidden="true"></i></a> 
+        </p>
+
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a> & <a href="https://pages.github.com/">Github Pages</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+
+    <div class="back-to-top">
+    <a href="#top" class="scroll">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/scroll.min.js " charset="utf-8"></script>
+  </body>
+
+</html>

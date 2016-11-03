@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Presentation mode for awesome</title>
+    <meta name="description" content="After user’s inactivity, you want to dim the screen for power saving or to lock the screen for a security reason.But it’s annoying when you try to watch a vi...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="/css/fontawesome/css/font-awesome.min.css ">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="https://settis.github.io/2016/10/19/presentation-mode-for-awesome/">
+    <link rel="alternate" type="application/rss+xml" title="Settis" href="https://settis.github.io/feed.xml ">
+
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-85517469-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">Settis</a>
+        <small></small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left" id="post">
+        <h1>Presentation mode for awesome</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>Wed 19 Oct 2016
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Coding" title="Category: Coding" rel="category">Coding</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#awesome" title="Tag: awesome" rel="tag">awesome</a-->
+        <a href="/tag/#awesome" title="Tag: awesome" rel="tag">awesome</a>&nbsp;
+    
+        <!--a href="/tag/#lua" title="Tag: lua" rel="tag">lua</a-->
+        <a href="/tag/#lua" title="Tag: lua" rel="tag">lua</a>&nbsp;
+    
+        <!--a href="/tag/#xscreensaver" title="Tag: xscreensaver" rel="tag">xscreensaver</a-->
+        <a href="/tag/#xscreensaver" title="Tag: xscreensaver" rel="tag">xscreensaver</a>
+    
+  
+
+</span>
+
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <p>After user’s inactivity, you want to dim the screen for power saving or to lock the screen for a security reason.
+But it’s annoying when you try to watch a video or to take part in a meeting.
+Since Awesome is the framework window manager, we can programme this the rigth way.</p>
+
+<p>The code is based on the approach described in the <a href="https://awesome.naquadah.org/wiki/Disable_DPMS">Disable DPMS</a> wiki page. 
+Here are used only Awesome rules and external utility <em>xset</em>.
+When a client sends the signal about itself fullscreened, we call the function that will break the energy saving. After closing the application or disabling the fullscreen mode, the energy saving mode is switched on again.</p>
+
+<div class="language-lua highlighter-rouge"><pre class="highlight"><code><span class="kd">local</span> <span class="n">fullscreened_clients</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="kd">local</span> <span class="k">function</span> <span class="nf">remove_client</span><span class="p">(</span><span class="n">tabl</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">index</span> <span class="o">=</span> <span class="n">awful</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">table</span><span class="p">.</span><span class="n">hasitem</span><span class="p">(</span><span class="n">tabl</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="k">then</span>
+        <span class="nb">table.remove</span><span class="p">(</span><span class="n">tabl</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="o">#</span><span class="n">tabl</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">then</span>
+            <span class="n">awful</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="s2">"xset s on"</span><span class="p">)</span>
+            <span class="n">awful</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="s2">"xset +dpms"</span><span class="p">)</span>
+        <span class="k">end</span>             
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">client</span><span class="p">.</span><span class="n">connect_signal</span><span class="p">(</span><span class="s2">"property::fullscreen"</span><span class="p">,</span>
+    <span class="k">function</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">.</span><span class="n">fullscreen</span> <span class="k">then</span>
+            <span class="nb">table.insert</span><span class="p">(</span><span class="n">fullscreened_clients</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="k">if</span> <span class="o">#</span><span class="n">fullscreened_clients</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">then</span>
+                <span class="n">awful</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="s2">"xset s off"</span><span class="p">)</span>
+                <span class="n">awful</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="s2">"xset -dpms"</span><span class="p">)</span>
+            <span class="k">end</span>
+        <span class="k">else</span>
+            <span class="n">remove_client</span><span class="p">(</span><span class="n">fullscreened_clients</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+        <span class="k">end</span>
+    <span class="k">end</span><span class="p">)</span>
+    
+<span class="n">client</span><span class="p">.</span><span class="n">connect_signal</span><span class="p">(</span><span class="s2">"unmanage"</span><span class="p">,</span>
+    <span class="k">function</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">.</span><span class="n">fullscreen</span> <span class="k">then</span>
+            <span class="n">remove_client</span><span class="p">(</span><span class="n">fullscreened_clients</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+        <span class="k">end</span>
+    <span class="k">end</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>But I use the <em>xscreensaver</em> to lock the screen, and disabling DPMS does not help me at all. The only way I could find is running <code class="highlighter-rouge">xscreensaver-command -deactivate</code> from time to time. So, we need a timer to run this command periodically (let’s say, once in 2 minutes). Thus, we need to start/stop the timer instead of <code class="highlighter-rouge">awful.util.spawn("xset s on")</code> etc.</p>
+
+<div class="language-lua highlighter-rouge"><pre class="highlight"><code><span class="kd">local</span> <span class="n">capi</span> <span class="o">=</span> <span class="p">{</span> <span class="n">timer</span> <span class="o">=</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">timer</span><span class="p">)</span> <span class="o">==</span> <span class="s1">'table'</span> <span class="ow">and</span> <span class="n">timer</span> <span class="ow">or</span> <span class="nb">require</span> <span class="p">(</span><span class="s2">"gears.timer"</span><span class="p">))</span> <span class="p">}</span>
+
+<span class="kd">local</span> <span class="n">keeping_timer</span> <span class="o">=</span> <span class="n">capi</span><span class="p">.</span><span class="n">timer</span><span class="p">({</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="n">started</span> <span class="o">=</span> <span class="kc">false</span><span class="p">})</span>
+<span class="n">keeping_timer</span><span class="p">:</span><span class="n">connect_signal</span><span class="p">(</span><span class="s2">"timeout"</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="n">awful</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="s2">"xscreensaver-command -deactivate"</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span> <span class="k">end</span><span class="p">)</span>
+
+<span class="c1">-- disable the screensaver</span>
+<span class="n">keeping_timer</span><span class="p">:</span><span class="n">start</span><span class="p">()</span>
+
+<span class="c1">-- enable the screensaver</span>
+<span class="n">keeping_timer</span><span class="p">:</span><span class="n">stop</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>OK, this works fine now, but after some time I understand, that I need to switch into the “presentation mode” without fullscreening.
+Let’s add key binding for the toggle presentation mode. Also we need to change rules to start/stop our <code class="highlighter-rouge">keeping_timer</code>.</p>
+
+<div class="language-lua highlighter-rouge"><pre class="highlight"><code><span class="c1">-- Key bindings</span>
+<span class="n">globalkeys</span> <span class="o">=</span> <span class="n">awful</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">table</span><span class="p">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="c1">-- Toggle presentation mode</span>
+    <span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span> <span class="p">},</span> <span class="s2">"p"</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span>
+            <span class="n">presentation_mode</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">presentation_mode</span>
+            <span class="n">handle_screen_keeper</span><span class="p">()</span>
+        <span class="k">end</span><span class="p">),</span>
+</code></pre>
+</div>
+
+<figure class="highlight"><pre><code class="language-lua" data-lang="lua"><span class="k">function</span> <span class="nf">handle_screen_keeper</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">keeping_timer</span><span class="p">.</span><span class="n">started</span> <span class="k">then</span>
+        <span class="k">if</span> <span class="o">#</span><span class="n">fullscreened_clients</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">presentation_mode</span> <span class="k">then</span>
+            <span class="n">keeping_timer</span><span class="p">:</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">end</span>
+    <span class="k">else</span>
+        <span class="k">if</span> <span class="o">#</span><span class="n">fullscreened_clients</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">presentation_mode</span> <span class="k">then</span>
+            <span class="n">keeping_timer</span><span class="p">:</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>And the last thing that I want to add is the presentation mode widget for indicating the current status. I’m using the <strong>Powerarrow Darker</strong> theme from <a href="https://github.com/copycat-killer/awesome-copycats#awesome-wm-copycats">Awesome WM Copycats</a>. The current status line looks like:</p>
+
+<p><img src="/images/2016-10-19-presentation-mode-for-awesome/status_line.png" alt="" /></p>
+
+<p>In the “presentation mode” I want to have the following status line:</p>
+
+<p><img src="/images/2016-10-19-presentation-mode-for-awesome/status_line_presentation_mode.png" alt="" /></p>
+
+<p>Let’s see how this status line is organized. Here is the code from the original <strong>rc.lua.powerarrow-darker</strong>:</p>
+
+<figure class="highlight"><pre><code class="language-lua" data-lang="lua"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></td><td class="code"><pre>    <span class="c1">-- Widgets that are aligned to the upper right</span>
+    <span class="kd">local</span> <span class="n">right_layout_toggle</span> <span class="o">=</span> <span class="kc">true</span>
+    <span class="kd">local</span> <span class="k">function</span> <span class="nf">right_layout_add</span> <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+        <span class="kd">local</span> <span class="n">arg</span> <span class="o">=</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">right_layout_toggle</span> <span class="k">then</span>
+            <span class="n">right_layout</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">arrl_ld</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="k">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">do</span>
+                <span class="n">right_layout</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">wibox</span><span class="p">.</span><span class="n">widget</span><span class="p">.</span><span class="n">background</span><span class="p">(</span><span class="n">n</span> <span class="p">,</span><span class="n">beautiful</span><span class="p">.</span><span class="n">bg_focus</span><span class="p">))</span>
+            <span class="k">end</span>
+        <span class="k">else</span>
+            <span class="n">right_layout</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">arrl_dl</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="k">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">do</span>
+                <span class="n">right_layout</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+        <span class="n">right_layout_toggle</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">right_layout_toggle</span>
+    <span class="k">end</span>
+
+    <span class="c1">-- &lt;some code&gt;</span>
+    
+    <span class="n">right_layout_add</span><span class="p">(</span><span class="n">volicon</span><span class="p">,</span> <span class="n">volumewidget</span><span class="p">)</span>
+    <span class="n">right_layout_add</span><span class="p">(</span><span class="n">memicon</span><span class="p">,</span> <span class="n">memwidget</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Let’s take a look at the <code class="highlighter-rouge">right_layout_add</code> function. It adds the arrow and the list of widgets with the background that depends on the <code class="highlighter-rouge">right_layout_toggle</code>. Thus, the line 21 adds the arrow (black &lt; gray), the speaker icon, and the text widget (“40%”). The next arrow (gray &lt; black) belongs to the line 22. As you can see from pictures above, I plan to put the presentation mode widget between the keyboard layout and the datetime widgets if needed. This means that the arrow (black &lt; gray) in this place must be changed to the following sequence: the arrow (black &lt; red), the text widget (“P”), and the arrow (red &lt; grey). From lines 6 and 11, it turns out that the arrow will be added in every <code class="highlighter-rouge">right_layout_add</code> call. Let’s rewrite it to control this behaviour.</p>
+
+<div class="language-lua highlighter-rouge"><pre class="highlight"><code>    <span class="kd">local</span> <span class="k">function</span> <span class="nf">right_layout_add_</span><span class="p">(</span><span class="n">isArr</span><span class="p">,</span> <span class="n">widgets</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">right_layout_toggle</span> <span class="k">then</span>
+            <span class="k">if</span> <span class="n">isArr</span> <span class="k">then</span> <span class="n">right_layout</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">arrl_ld</span><span class="p">)</span> <span class="k">end</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="k">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">widgets</span><span class="p">)</span> <span class="k">do</span>
+                <span class="n">right_layout</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">wibox</span><span class="p">.</span><span class="n">widget</span><span class="p">.</span><span class="n">background</span><span class="p">(</span><span class="n">n</span> <span class="p">,</span><span class="n">beautiful</span><span class="p">.</span><span class="n">bg_focus</span><span class="p">))</span>
+            <span class="k">end</span>
+        <span class="k">else</span>
+            <span class="k">if</span> <span class="n">isArr</span> <span class="k">then</span> <span class="n">right_layout</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">arrl_dl</span><span class="p">)</span> <span class="k">end</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="k">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">widgets</span><span class="p">)</span> <span class="k">do</span>
+                <span class="n">right_layout</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+        <span class="n">right_layout_toggle</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">right_layout_toggle</span>
+    <span class="k">end</span>
+    <span class="kd">local</span> <span class="k">function</span> <span class="nf">right_layout_add</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+        <span class="kd">local</span> <span class="n">arg</span> <span class="o">=</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+        <span class="n">right_layout_add_</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+    <span class="k">end</span>
+</code></pre>
+</div>
+
+<p>I’ve found that awesome v3.5 has no way to change the widget visibility, but I’ve got the hack from <a href="http://www.mail-archive.com/awesome-devel@naquadah.org/msg06713.html">The Mail Archive</a>:</p>
+
+<div class="language-lua highlighter-rouge"><pre class="highlight"><code><span class="c1">-- Awesome v3.4</span>
+<span class="n">somewidget</span> <span class="o">=</span> <span class="n">wibox</span><span class="p">.</span><span class="n">widget</span><span class="p">.</span><span class="n">textbox</span><span class="p">(</span><span class="s2">"Foo"</span><span class="p">)</span>
+<span class="n">somewidget</span><span class="p">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="n">somewidget</span><span class="p">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="c1">-- hack for Awesome v3.5</span>
+<span class="n">somewidget_internal</span> <span class="o">=</span> <span class="n">wibox</span><span class="p">.</span><span class="n">widget</span><span class="p">.</span><span class="n">textbox</span><span class="p">(</span><span class="s2">"Foo"</span><span class="p">)</span>
+<span class="n">somewidget</span> <span class="o">=</span> <span class="n">wibox</span><span class="p">.</span><span class="n">layout</span><span class="p">.</span><span class="n">margin</span><span class="p">(</span><span class="n">somewidget_internal</span><span class="p">)</span>
+<span class="n">somewidget</span><span class="p">:</span><span class="n">set_widget</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+<span class="n">somewidget</span><span class="p">:</span><span class="n">set_widget</span><span class="p">(</span><span class="n">somewidget_internal</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>And here is the working result:</p>
+
+<div class="language-lua highlighter-rouge"><pre class="highlight"><code><span class="c1">-- put this in the top</span>
+<span class="kd">local</span> <span class="n">capi</span>   <span class="o">=</span> <span class="p">{</span> <span class="n">timer</span> <span class="o">=</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">timer</span><span class="p">)</span> <span class="o">==</span> <span class="s1">'table'</span> <span class="ow">and</span> <span class="n">timer</span> <span class="ow">or</span> <span class="nb">require</span> <span class="p">(</span><span class="s2">"gears.timer"</span><span class="p">))</span> <span class="p">}</span>
+
+<span class="c1">-- The presentation mode widget</span>
+<span class="n">presentwidget</span> <span class="o">=</span> <span class="n">wibox</span><span class="p">.</span><span class="n">layout</span><span class="p">.</span><span class="n">margin</span><span class="p">()</span>
+<span class="n">presentwidget_inner</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="n">presentwidget_inner_stub</span> <span class="o">=</span> <span class="kc">nil</span>
+
+<span class="c1">-- The separators</span>
+<span class="n">red</span> <span class="o">=</span> <span class="s2">"#ff0000"</span>
+<span class="n">arrl_dr</span> <span class="o">=</span> <span class="n">separators</span><span class="p">.</span><span class="n">arrow_left</span><span class="p">(</span><span class="n">beautiful</span><span class="p">.</span><span class="n">bg_focus</span><span class="p">,</span> <span class="n">red</span><span class="p">)</span>
+<span class="n">arrl_lr</span> <span class="o">=</span> <span class="n">separators</span><span class="p">.</span><span class="n">arrow_left</span><span class="p">(</span><span class="s2">"alpha"</span><span class="p">,</span> <span class="n">red</span><span class="p">)</span>
+<span class="n">arrl_rd</span> <span class="o">=</span> <span class="n">separators</span><span class="p">.</span><span class="n">arrow_left</span><span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">beautiful</span><span class="p">.</span><span class="n">bg_focus</span><span class="p">)</span>
+<span class="n">arrl_rl</span> <span class="o">=</span> <span class="n">separators</span><span class="p">.</span><span class="n">arrow_left</span><span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="s2">"alpha"</span><span class="p">)</span>
+
+<span class="c1">-- in the existing screen loop</span>
+<span class="k">for</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">screen</span><span class="p">.</span><span class="n">count</span><span class="p">()</span> <span class="k">do</span>
+
+    <span class="c1">-- Some other code</span>
+
+    <span class="c1">-- Widgets that are aligned to the upper right</span>
+    <span class="kd">local</span> <span class="n">right_layout_toggle</span> <span class="o">=</span> <span class="kc">true</span>
+    <span class="kd">local</span> <span class="k">function</span> <span class="nf">right_layout_add_</span><span class="p">(</span><span class="n">isArr</span><span class="p">,</span> <span class="n">widgets</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">right_layout_toggle</span> <span class="k">then</span>
+            <span class="k">if</span> <span class="n">isArr</span> <span class="k">then</span> <span class="n">right_layout</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">arrl_ld</span><span class="p">)</span> <span class="k">end</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="k">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">widgets</span><span class="p">)</span> <span class="k">do</span>
+                <span class="n">right_layout</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">wibox</span><span class="p">.</span><span class="n">widget</span><span class="p">.</span><span class="n">background</span><span class="p">(</span><span class="n">n</span> <span class="p">,</span><span class="n">beautiful</span><span class="p">.</span><span class="n">bg_focus</span><span class="p">))</span>
+            <span class="k">end</span>
+        <span class="k">else</span>
+            <span class="k">if</span> <span class="n">isArr</span> <span class="k">then</span> <span class="n">right_layout</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">arrl_dl</span><span class="p">)</span> <span class="k">end</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="k">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">widgets</span><span class="p">)</span> <span class="k">do</span>
+                <span class="n">right_layout</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+        <span class="n">right_layout_toggle</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">right_layout_toggle</span>
+    <span class="k">end</span>
+    <span class="kd">local</span> <span class="k">function</span> <span class="nf">right_layout_add</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+        <span class="kd">local</span> <span class="n">arg</span> <span class="o">=</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+        <span class="n">right_layout_add_</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+    <span class="k">end</span>
+    
+    <span class="c1">-- adding other widgets</span>
+    
+    <span class="n">right_layout_add</span><span class="p">(</span><span class="n">neticon</span><span class="p">,</span> <span class="n">netwidget</span><span class="p">)</span>
+    <span class="n">right_layout_add</span><span class="p">(</span><span class="n">kbdwidget</span><span class="p">)</span>
+    <span class="n">right_layout</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">presentwidget</span><span class="p">)</span>
+    <span class="n">presentwidget_inner_stub</span> <span class="o">=</span> <span class="n">wibox</span><span class="p">.</span><span class="n">layout</span><span class="p">.</span><span class="n">fixed</span><span class="p">.</span><span class="n">horizontal</span><span class="p">()</span>
+    <span class="n">presentwidget_inner</span> <span class="o">=</span> <span class="n">wibox</span><span class="p">.</span><span class="n">layout</span><span class="p">.</span><span class="n">fixed</span><span class="p">.</span><span class="n">horizontal</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">p_widget</span> <span class="o">=</span> <span class="n">wibox</span><span class="p">.</span><span class="n">widget</span><span class="p">.</span><span class="n">background</span><span class="p">(</span><span class="n">wibox</span><span class="p">.</span><span class="n">widget</span><span class="p">.</span><span class="n">textbox</span><span class="p">(</span><span class="s2">" P "</span><span class="p">),</span> <span class="n">red</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">right_layout_toggle</span> <span class="k">then</span>
+        <span class="n">presentwidget_inner_stub</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">arrl_ld</span><span class="p">)</span>
+        <span class="n">presentwidget_inner</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">arrl_lr</span><span class="p">)</span>
+        <span class="n">presentwidget_inner</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">p_widget</span><span class="p">)</span>
+        <span class="n">presentwidget_inner</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">arrl_rd</span><span class="p">)</span>
+    <span class="k">else</span>
+        <span class="n">presentwidget_inner_stub</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">arrl_dl</span><span class="p">)</span>
+        <span class="n">presentwidget_inner</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">arrl_dr</span><span class="p">)</span>
+        <span class="n">presentwidget_inner</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">p_widget</span><span class="p">)</span>
+        <span class="n">presentwidget_inner</span><span class="p">:</span><span class="n">add</span><span class="p">(</span><span class="n">arrl_rl</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="n">presentwidget</span><span class="p">:</span><span class="n">set_widget</span><span class="p">(</span><span class="n">presentwidget_inner_stub</span><span class="p">)</span>
+    <span class="n">right_layout_add_</span><span class="p">(</span><span class="kc">false</span><span class="p">,</span> <span class="p">{</span><span class="n">mytextclock</span><span class="p">,</span> <span class="n">spr</span><span class="p">})</span>
+    <span class="n">right_layout_add</span><span class="p">(</span><span class="n">mylayoutbox</span><span class="p">[</span><span class="n">s</span><span class="p">])</span>
+
+<span class="c1">-- Lines of code</span>
+
+<span class="c1">-- Key bindings</span>
+<span class="n">globalkeys</span> <span class="o">=</span> <span class="n">awful</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">table</span><span class="p">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="c1">-- Toggle presentation mode</span>
+    <span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span> <span class="p">},</span> <span class="s2">"p"</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span>
+            <span class="n">presentation_mode</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">presentation_mode</span>
+            <span class="n">handle_screen_keeper</span><span class="p">()</span>
+        <span class="k">end</span><span class="p">),</span>
+        
+<span class="c1">-- Lines of code</span>
+
+<span class="kd">local</span> <span class="n">fullscreened_clients</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">presentation_mode</span> <span class="o">=</span> <span class="kc">false</span>
+
+<span class="kd">local</span> <span class="n">keeping_timer</span> <span class="o">=</span> <span class="n">capi</span><span class="p">.</span><span class="n">timer</span><span class="p">({</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="n">started</span> <span class="o">=</span> <span class="kc">false</span><span class="p">})</span>
+<span class="n">keeping_timer</span><span class="p">:</span><span class="n">connect_signal</span><span class="p">(</span><span class="s2">"timeout"</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="n">awful</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="s2">"xscreensaver-command -deactivate"</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span> <span class="k">end</span><span class="p">)</span>
+
+<span class="k">function</span> <span class="nf">handle_screen_keeper</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">keeping_timer</span><span class="p">.</span><span class="n">started</span> <span class="k">then</span>
+        <span class="k">if</span> <span class="o">#</span><span class="n">fullscreened_clients</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">presentation_mode</span> <span class="k">then</span>
+            <span class="n">keeping_timer</span><span class="p">:</span><span class="n">stop</span><span class="p">()</span>
+            <span class="n">presentwidget</span><span class="p">:</span><span class="n">set_widget</span><span class="p">(</span><span class="n">presentwidget_inner_stub</span><span class="p">)</span>
+        <span class="k">end</span>
+    <span class="k">else</span>
+        <span class="k">if</span> <span class="o">#</span><span class="n">fullscreened_clients</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">presentation_mode</span> <span class="k">then</span>
+            <span class="n">keeping_timer</span><span class="p">:</span><span class="n">start</span><span class="p">()</span>
+            <span class="n">presentwidget</span><span class="p">:</span><span class="n">set_widget</span><span class="p">(</span><span class="n">presentwidget_inner</span><span class="p">)</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="kd">local</span> <span class="k">function</span> <span class="nf">remove_client</span><span class="p">(</span><span class="n">tabl</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">index</span> <span class="o">=</span> <span class="n">awful</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">table</span><span class="p">.</span><span class="n">hasitem</span><span class="p">(</span><span class="n">tabl</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="k">then</span>
+        <span class="nb">table.remove</span><span class="p">(</span><span class="n">tabl</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="n">handle_screen_keeper</span><span class="p">()</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">client</span><span class="p">.</span><span class="n">connect_signal</span><span class="p">(</span><span class="s2">"property::fullscreen"</span><span class="p">,</span>
+    <span class="k">function</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">.</span><span class="n">fullscreen</span> <span class="k">then</span>
+            <span class="nb">table.insert</span><span class="p">(</span><span class="n">fullscreened_clients</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="n">handle_screen_keeper</span><span class="p">()</span>
+        <span class="k">else</span>
+            <span class="n">remove_client</span><span class="p">(</span><span class="n">fullscreened_clients</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+        <span class="k">end</span>
+    <span class="k">end</span><span class="p">)</span>
+
+<span class="n">client</span><span class="p">.</span><span class="n">connect_signal</span><span class="p">(</span><span class="s2">"unmanage"</span><span class="p">,</span>
+    <span class="k">function</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">.</span><span class="n">fullscreen</span> <span class="k">then</span>
+            <span class="n">remove_client</span><span class="p">(</span><span class="n">fullscreened_clients</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+        <span class="k">end</span>
+    <span class="k">end</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Have fun!</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+        
+            
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>Previous</strong> <a href="/2016/10/04/question/">Вопрос</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+    </div>
+</div>
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content" id="content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
+		    
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+<script src="/js/content.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+	
+
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/Settis" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:strannik.anton@gmail.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>         
+            <a href="https://vk.com/settis" title="VK"><i class="fa fa-vk" aria-hidden="true"></i></a> 
+        </p>
+
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a> & <a href="https://pages.github.com/">Github Pages</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+
+    <div class="back-to-top">
+    <a href="#top" class="scroll">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/scroll.min.js " charset="utf-8"></script>
+  </body>
+
+</html>
