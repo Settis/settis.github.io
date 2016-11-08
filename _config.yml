@@ -38,6 +38,8 @@ tag_dir: tag/
 gems: [jekyll-paginate]
 paginate: 6
 
+exclude: [vendor]
+
 defaults:
   - 
     scope:
