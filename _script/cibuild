@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
 set -e # halt script on error
 
+export JEKYLL_ENV=production
 bundle exec jekyll build
 bundle exec htmlproofer ./_site
+
+commit_message=`git log --format=%s -n 1`
+
+git clone -b master "https://${GH_REF}" ghPages
+rm -rf ghPages/**/*
+cp -r _site/* ghPages/
+
+cd ghPages
+
+if [`git diff --exit-code`]; then
+  git add -A
+  git config user.name "Travis-CI"
+  git config user.email "travis@no.reply"
+  git commit -m "$commit_message"
+  git push "https://${GH_TOKEN}:x-oauth-basic@${GH_REF}" master
+fi
