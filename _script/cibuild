@@ -7,15 +7,13 @@ bundle exec htmlproofer ./_site
 
 commit_message=`git log --format=%s -n 1`
 
-cd ../
-
 git clone -b master "https://${GH_REF}" ghPages
-rm -rf ghPages/**/*
-cp -r settis.github.io/_site/* ghPages/
+rm -rf ghPages/*
+cp -r _site/* ghPages/
 
 cd ghPages
 
-if [[ $(git status --porcelain 2> /dev/null | tail -n1) != "" ]]; then
+if [[ $(git status --porcelain 2> /dev/null | grep -v feed.xml | tail -n1) != "" ]]; then
   git add -A
   git config user.name "Travis-CI"
   git config user.email "travis@no.reply"
