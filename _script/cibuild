@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -e # halt script on error
-set -o xtrace # print each command before executing
 
 export JEKYLL_ENV=production
 bundle exec jekyll build
@@ -14,10 +13,10 @@ cp -r _site/* ghPages/
 
 cd ghPages
 
-if [`git diff --exit-code`]; then
+if [[ $(git status --porcelain 2> /dev/null | tail -n1) != "" ]]; then
   git add -A
   git config user.name "Travis-CI"
   git config user.email "travis@no.reply"
   git commit -m "$commit_message"
-  git push "https://${GH_TOKEN}:x-oauth-basic@${GH_REF}" master
+  git push "https://${GH_TOKEN}@${GH_REF}" > /dev/null 2>&1
 fi
