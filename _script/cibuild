@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e # halt script on error
+set -o xtrace # print each command before executing
 
 export JEKYLL_ENV=production
 bundle exec jekyll build
