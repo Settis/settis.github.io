@@ -7,9 +7,11 @@ bundle exec htmlproofer ./_site
 
 commit_message=`git log --format=%s -n 1`
 
+cd ../
+
 git clone -b master "https://${GH_REF}" ghPages
 rm -rf ghPages/**/*
-cp -r _site/* ghPages/
+cp -r settis.github.io/_site/* ghPages/
 
 cd ghPages
 
