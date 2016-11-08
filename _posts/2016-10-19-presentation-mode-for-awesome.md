@@ -91,11 +91,11 @@ end
 
 And the last thing that I want to add is the presentation mode widget for indicating the current status. I'm using the **Powerarrow Darker** theme from [Awesome WM Copycats](https://github.com/copycat-killer/awesome-copycats#awesome-wm-copycats). The current status line looks like:
 
-![]({{ page.image_dir }}/status_line.png)
+![current status line]({{ page.image_dir }}/status_line.png)
 
 In the "presentation mode" I want to have the following status line:
 
-![]({{ page.image_dir }}/status_line_presentation_mode.png)
+![status line with the presentation mode ]({{ page.image_dir }}/status_line_presentation_mode.png)
 
 Let's see how this status line is organized. Here is the code from the original **rc.lua.powerarrow-darker**:
 
