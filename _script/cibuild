@@ -3,7 +3,7 @@ set -e # halt script on error
 
 export JEKYLL_ENV=production
 bundle exec jekyll build
-bundle exec htmlproofer ./_site
+time bundle exec htmlproofer ./_site --check-html
 
 commit_message=`git log --format=%s -n 1`
 
