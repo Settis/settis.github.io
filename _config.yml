@@ -6,8 +6,6 @@ url: "https://settis.github.io"
 permalink: /:year/:month/:day/:title/
 
 # other links
-
-#facebook_username: gaohaoyang.water
 github_username:  Settis
 email: strannik.anton@gmail.com
 vk_username: settis
@@ -20,7 +18,11 @@ vk_username: settis
 # duoshuo_shortname: #hygblog
 # disqus_shortname: gaohaoyang
 
-# statistic analysis 
+# statistic analysis 统计代码
+# 百度统计 id，将统计代码替换为自己的百度统计id，即
+# hm.src = "//hm.baidu.com/hm.js?xxxxxxxxxxxx";
+# xxxxx字符串
+# baidu_tongji_id: cf8506e0ef223e57ff6239944e5d46a4
 google_analytics_id: UA-85517469-1
 
 # Build settings
@@ -34,11 +36,16 @@ kramdown:
 category_dir: category/
 tag_dir: tag/
 
+# excerpt
+excerpt_separator: "\n\n"
+
 # paginate
 gems: [jekyll-paginate]
-paginate: 6
+paginate: 10
 
 exclude: [vendor, Gemfile, Gemfile.lock, LICENSE, README.md]
+plugins:
+  - jekyll-paginate
 
 defaults:
   - 
