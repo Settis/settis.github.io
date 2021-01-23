@@ -23,7 +23,7 @@ vk_username: settis
 # hm.src = "//hm.baidu.com/hm.js?xxxxxxxxxxxx";
 # xxxxx字符串
 # baidu_tongji_id: cf8506e0ef223e57ff6239944e5d46a4
-google_analytics_id: UA-85517469-1
+google_analytics_gtag: G-9HKX561QKW
 
 # Build settings
 markdown: kramdown
