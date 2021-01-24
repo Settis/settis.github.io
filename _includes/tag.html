@@ -11,6 +11,9 @@
   {% endif %}
 {% endcapture %}
 <!-- <span class="point">•</span> -->
+{% capture tag_size %}{{ tags | strip_newlines | replace: ' ', '' | size }}{% endcapture %}
+{% unless tag_size == '0' %}
 <span class="pageTag">
   <i class="fa fa-tags"></i>{{ tags }}
 </span>
+{% endunless %}
