@@ -28,7 +28,7 @@ function generateContent() {
 
     // 若无相似文章，隐藏这部分
     var relatedPost = document.querySelector('.related-post');
-    if (relatedPost.innerHTML.trim() === '') {
+    if (relatedPost && relatedPost.innerHTML.trim() === '') {
         relatedPost.style.display = 'none'
     }
 }
@@ -42,14 +42,16 @@ fixSidebar()
  */
 function fixSidebar() {
     var sidebarWrap = document.querySelector('.sidebar-wrap')
-    window.onscroll = function() {
-        var sidebarWrapTop = sidebarWrap.getBoundingClientRect().top
-        if (sidebarWrapTop < 21) {
-            sidebarWrap.classList.add('fixed')
-        }
-        var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop)
-        if (scrollTop < 78) {
-            sidebarWrap.classList.remove('fixed')
+    if (sidebarWrap) {
+        window.onscroll = function() {
+            var sidebarWrapTop = sidebarWrap.getBoundingClientRect().top
+            if (sidebarWrapTop < 21) {
+                sidebarWrap.classList.add('fixed')
+            }
+            var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+            if (scrollTop < 78) {
+                sidebarWrap.classList.remove('fixed')
+            }
         }
     }
 }
@@ -65,6 +67,7 @@ function controlHeight() {
     //和用户浏览器窗口的高度
     //给content设置最大高度
     var similarDiv = document.querySelector('.related-post')
+    if (! similarDiv) return;
     var contentUl = document.querySelector('.content-ul')
     var similarDivHeight = similarDiv.offsetHeight
     var windowHeight = window.innerHeight
