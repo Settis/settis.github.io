@@ -67,9 +67,9 @@ The tree object describes a folder.
 Here we assign a file name and permission with its content - blob object.
 The blob object is addressed by its SHA.
 We already have the hash calculated, but it's in hexadecimal format.
-The tree object requires it in binary, it can be converted like this:
+The tree object requires it in raw bytes, it can be converted like this:
 ```bash
-BINARY_BLOB_SHA=`printf '%b' "$(echo "$BLOB_SHA" | sed 's/../\\\\x&/g')"`
+RAW_BYTES_BLOB_SHA=`printf '%b' "$(echo "$BLOB_SHA" | sed 's/../\\\\x&/g')"`
 ```
 
 Here are those two SHA sums printed by hexdump to show the difference:
@@ -79,16 +79,16 @@ $ echo -n "$BLOB_SHA" | hexdump -C
 00000010  37 62 36 35 66 30 65 38  37 38 34 65 66 37 38 34  |7b65f0e8784ef784|
 00000020  38 30 34 64 33 36 61 63                           |804d36ac|
 00000028
-$ echo -n "$BINARY_BLOB_SHA" | hexdump -C
+$ echo -n "$RAW_BYTES_BLOB_SHA" | hexdump -C
 00000000  93 3e fa 7e 6e 2b 35 c2  7b 65 f0 e8 78 4e f7 84  |.>.~n+5.{e..xN..|
 00000010  80 4d 36 ac                                       |.M6.|
 00000014
 ```
 
-Inside the tree object, a file described by template `<access> <fineName>\0<binarySHA>`.
+Inside the tree object, a file described by template `<access> <fineName>\0<rawBytesSHA>`.
 Let's put it into a separate file to calculate its size more easily.
 ```bash
-{ echo -n '100644 file.txt'; zero; echo -n "$BINARY_BLOB_SHA"; } > tree.content
+{ echo -n '100644 file.txt'; zero; echo -n "$RAW_BYTES_BLOB_SHA"; } > tree.content
 { echo -n "tree $(size 'tree.content')"; zero; cat tree.content; } > tree.bin
 ```
 
@@ -171,8 +171,8 @@ mkdir -p .git/objects/"${BLOB_SHA:0:2}"
 compress < blob.bin > .git/objects/"${BLOB_SHA:0:2}"/"${BLOB_SHA:2:38}"
 
 # Creating tree
-BINARY_BLOB_SHA=`printf '%b' "$(echo "$BLOB_SHA" | sed 's/../\\\\x&/g')"`
-{ echo -n '100644 file.txt'; zero; echo -n "$BINARY_BLOB_SHA"; } > tree.content
+RAW_BYTES_BLOB_SHA=`printf '%b' "$(echo "$BLOB_SHA" | sed 's/../\\\\x&/g')"`
+{ echo -n '100644 file.txt'; zero; echo -n "$RAW_BYTES_BLOB_SHA"; } > tree.content
 { echo -n "tree $(size 'tree.content')"; zero; cat tree.content; } > tree.bin
 TREE_SHA=`getSha tree.bin`
 mkdir .git/objects/"${TREE_SHA:0:2}"
